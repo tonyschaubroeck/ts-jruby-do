@@ -1,4 +1,5 @@
 require File.expand_path(File.join(File.dirname(__FILE__), 'spec_helper'))
+require 'rspec/its'
 
 describe DataObjects::URI do
   subject { described_class.parse(uri) }

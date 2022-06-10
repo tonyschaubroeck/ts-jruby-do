@@ -149,7 +149,7 @@ describe "DataObjects::Pooling" do
     bob.release
     DataObjects.exiting = true
     sleep(1)
-    DataObjects::Pooling.scavenger?.should be_false
+    DataObjects::Pooling.scavenger?.should be_falsey
   end
 
   it "should be able to detach an instance from the pool" do

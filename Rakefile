@@ -1,3 +1,4 @@
+require 'bundler/setup' # Set up gems listed in the Gemfile
 require 'pathname'
 require 'rubygems'
 require 'rake'
@@ -12,18 +13,26 @@ SUDO     = WINDOWS ? '' : ('sudo' unless ENV['SUDOLESS'])
 # RCov is run by default, except on the JRuby and IronRuby platforms, or if NO_RCOV env is true
 RUN_RCOV = JRUBY || IRONRUBY ? false : (ENV.has_key?('NO_RCOV') ? ENV['NO_RCOV'] != 'true' : true)
 
-jruby_projects = %w[do_jdbc do_derby do_h2 do_hsqldb do_openedge]
+# jruby_projects = %w[do_jdbc do_derby do_h2 do_hsqldb do_openedge]
+# projects = %w[data_objects]
+# projects += %w[do_mysql do_postgres do_sqlite3 do_sqlserver do_oracle]
+# projects += jruby_projects if JRUBY
+
+jruby_projects = %w[do_jdbc do_openedge do_sqlite3 do_oracle]
+# jruby_projects = %w[do_sqlite3]
+jruby_projects = %w[data_objects do_jdbc do_openedge do_oracle]
+# jruby_projects = %w[]
 projects = %w[data_objects]
-projects += %w[do_mysql do_postgres do_sqlite3 do_sqlserver do_oracle]
 projects += jruby_projects if JRUBY
 
 def rake(cmd)
-  ruby "-S rake #{cmd}", :verbose => false
+  ruby "-S rake #{cmd}", :verbose => true
 end
 
 desc 'Release all do gems'
 task :release do
-  (jruby_projects + projects).uniq.each do |dir|
+  # (jruby_projects + projects).uniq.each do |dir|
+  (jruby_projects).uniq.each do |dir|
     Dir.chdir(dir){ rake "release_all" }
   end
 end
@@ -40,18 +49,20 @@ task :default => [:spec]
 desc 'Run all the specs for the subprojects'
 task :spec do
 
-  commands = [
-    'mysql -u root -e "create database do_test;"',
-    'psql  -c "create database do_test;" -U postgres',
-  ]
+  # commands = [
+  #   'mysql -u root -e "create database do_test;"',
+  #   'psql  -c "create database do_test;" -U postgres',
+  # ]
+  #
+  # commands.each do |command|
+  #   `#{command}`
+  # end
 
-  commands.each do |command|
-    `#{command}`
-  end
-
-  spec_projects = %w[data_objects do_mysql do_postgres do_sqlite3]
+  # spec_projects = %w[data_objects do_mysql do_postgres do_sqlite3]
+  spec_projects = %w[data_objects do_sqlite3]
   if JRUBY
-    spec_projects += %w[do_derby do_h2 do_hsqldb]
+    #spec_projects += %w[do_derby do_h2 do_hsqldb]
+    # spec_projects = %w[data_objects]
     Dir.chdir("do_jdbc") { rake :compile }
   end
 
@@ -85,7 +96,8 @@ end
 tasks.each do |name, description|
   desc description
   task name do
-    (jruby_projects + projects).each do |gem_name|
+    # (jruby_projects + projects).each do |gem_name|
+    (jruby_projects).each do |gem_name|
       Dir.chdir(gem_name){ rake name }
     end
   end

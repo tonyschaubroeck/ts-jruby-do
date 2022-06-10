@@ -23,7 +23,8 @@ CLEAN.include(%w[ {tmp,pkg}/ **/*.{o,so,bundle,jar,log,a,gem,dSYM,obj,pdb,exp,DS
 if JRUBY
   Rake::Task['build'].clear_actions   if Rake::Task.task_defined?('build')
   Rake::Task['install'].clear_actions if Rake::Task.task_defined?('install')
-  task :build => [ :java, :gem ]
+  # task :build => [ :java, :gem ]
+  task :build => [ :java]
   task :install do
     sh "#{Config::CONFIG['RUBY_INSTALL_NAME']} -S gem install pkg/do_sqlite3-#{DataObjects::Sqlite3::VERSION}-java.gem"
   end

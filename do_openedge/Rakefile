@@ -1,3 +1,4 @@
+# require 'bundler/setup' # Set up gems listed in the Gemfile
 require 'pathname'
 require 'rubygems'
 require 'bundler'
@@ -20,6 +21,7 @@ CLEAN.include(%w[ {tmp,pkg}/ **/*.{o,so,bundle,jar,log,a,gem,dSYM,obj,pdb,exp,DS
 
 
 Rake::Task['build'].clear_actions if Rake::Task.task_defined?('build')
-task :build => [ :java, :gem ]
+# task :build => [ :java, :gem ]
+task :build => [ :java ]
 
 FileList['tasks/**/*.rake'].each { |task| import task }

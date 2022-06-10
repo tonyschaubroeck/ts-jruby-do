@@ -1,5 +1,6 @@
 require File.expand_path(File.join(File.dirname(__FILE__), 'spec_helper'))
 require 'stringio'
+require 'rspec/its'
 
 describe DataObjects::Connection do
   subject { connection }

@@ -1,5 +1,6 @@
 begin
-  gem 'rake-compiler', '~>0.7'
+  # require 'bundler/setup' # Set up gems listed in the Gemfile
+  # gem 'rake-compiler', '~>0.7'
   require 'rake/javaextensiontask'
 
   def gemspec
@@ -12,9 +13,11 @@ begin
     ext.debug     = ENV.has_key?('DO_JAVA_DEBUG') && ENV['DO_JAVA_DEBUG']
     ext.classpath = '../do_jdbc/lib/do_jdbc_internal.jar'
     ext.java_compiling do |gem|
-      gem.add_dependency 'jdbc-openedge'
-      gem.add_dependency 'do_jdbc',       '0.10.17'
+      gem.add_dependency 'jdbc-openedge', '~> 11.1'
+      # gem.add_dependency 'do_jdbc', '0.11.1'
     end
+    ext.source_version = '1.8'                     # The JRE version that source code requires to compile. Def: 1.7.
+    ext.target_version = '1.8'                     # The oldest JRE version you want to support. Default: 1.7
   end
 
   # do_openedge is only available for JRuby: the normal behaviour of rake-compiler

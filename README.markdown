@@ -56,6 +56,10 @@ More drivers are
 currently under development. If you feel like living on the edge, install and
 test drivers directly from this repository.
 
+Resources
+------------
+https://github-wiki-see.page/m/datamapper/do/wiki/JRuby
+
 Introduction
 ------------
 

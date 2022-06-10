@@ -369,7 +369,9 @@ public class Command extends DORubyObject {
     @JRubyMethod(rest = true)
     public IRubyObject set_types(IRubyObject[] args) {
         Ruby runtime = getRuntime();
-        RubyArray types = RubyArray.newArray(runtime, args);
+        // RubyArray types = RubyArray.newArray(runtime, args);
+
+        RubyArray types = RubyArray.newArrayMayCopy(runtime, args);
         fieldTypes = new ArrayList<RubyType>(types.size());
 
         for (IRubyObject arg : args) {

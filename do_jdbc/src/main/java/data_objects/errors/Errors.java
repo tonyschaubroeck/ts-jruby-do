@@ -48,12 +48,12 @@ public final class Errors {
     }
 
     public static RaiseException newConnectionError(Ruby runtime, String message) {
-        RubyModule doModule = runtime.fastGetModule(DATA_OBJECTS_MODULE_NAME);
+        RubyModule doModule = runtime.getModule(DATA_OBJECTS_MODULE_NAME);
         return newError(runtime, doModule.getClass(Type.CONNECTION_ERROR.getRubyName()), message);
     }
 
     public static RaiseException newDataError(Ruby runtime, String message) {
-        RubyModule doModule = runtime.fastGetModule(DATA_OBJECTS_MODULE_NAME);
+        RubyModule doModule = runtime.getModule(DATA_OBJECTS_MODULE_NAME);
         return newError(runtime, doModule.getClass(Type.DATA_ERROR.getRubyName()), message);
     }
 
@@ -128,6 +128,7 @@ public final class Errors {
                 Block.NULL_BLOCK);
 
         return new RaiseException(doSqlError);
+         // return setException(doSqlError);
     }
 
     public static RaiseException newError(Ruby runtime, RubyClass errorClass, String message) {

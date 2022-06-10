@@ -74,6 +74,7 @@ will produce an error and give you message like (maybe with a different version)
 
   Try downloading the file manually from:
       http://www.oracle.com/technology/software/tech/java/sqlj_jdbc/index.html
+  https://www.oracle.com/database/technologies/appdev/jdbc-downloads.html
 
   Then, install it using the command:
       mvn install:install-file -DgroupId=com.oracle -DartifactId=ojdbc14 -Dversion=10.2.0.3.0 -Dpackaging=jar -Dfile=/path/to/file

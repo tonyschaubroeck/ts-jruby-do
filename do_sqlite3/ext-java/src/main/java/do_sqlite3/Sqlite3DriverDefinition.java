@@ -164,7 +164,7 @@ public class Sqlite3DriverDefinition extends AbstractDriverDefinition {
             if (rs.wasNull() || bytes.length() == 0) {
                 return runtime.getNil();
             }
-            return API.callMethod(runtime.fastGetModule("Extlib").fastGetClass(
+            return API.callMethod(runtime.getModule("Extlib").getClass(
                     "ByteArray"), "new", runtime.newString(bytes));
         case TRUE_CLASS:
             final String tvalue = rs.getString(col);

@@ -1,7 +1,9 @@
+#require 'bundler/setup' # Set up gems listed in the Gemfile
 require 'pathname'
 require 'rubygems'
 require 'bundler'
 require 'rubygems/package_task'
+require 'rspec/its'
 Bundler::GemHelper.install_tasks
 
 require 'rake'

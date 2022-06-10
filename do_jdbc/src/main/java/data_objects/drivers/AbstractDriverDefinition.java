@@ -381,7 +381,7 @@ public abstract class AbstractDriverDefinition implements DriverDefinition {
             } finally {
                 binaryStream.close();
             }
-            return API.callMethod(runtime.fastGetModule("Extlib").fastGetClass(
+            return API.callMethod(runtime.getModule("Extlib").getClass(
                     "ByteArray"), "new", runtime.newString(bytes));
         case CLASS:
             String classNameStr = rs.getString(col);
@@ -390,7 +390,7 @@ public abstract class AbstractDriverDefinition implements DriverDefinition {
             }
             RubyString class_name_str = newUnicodeString(runtime, rs.getString(col));
             class_name_str.setTaint(true);
-            return API.callMethod(runtime.fastGetModule("DataObjects"), "full_const_get",
+            return API.callMethod(runtime.getModule("DataObjects"), "full_const_get",
                     class_name_str);
         case NIL:
             return runtime.getNil();
@@ -409,16 +409,17 @@ public abstract class AbstractDriverDefinition implements DriverDefinition {
 
     protected RubyString newUnicodeString(Ruby runtime, String str) {
         RubyString return_str;
-        if (runtime.is1_9()){
-            IRubyObject obj = RubyEncoding.getDefaultInternal(RubyString.newEmptyString(runtime));
-            Encoding enc = obj.isNil() ? Encoding.load("UTF8") : ((RubyEncoding) obj).getEncoding();
-            ByteList value = new ByteList(RubyEncoding.encodeUTF8(str), false);
-            return_str = RubyString.newString(runtime, value);
-            value.setEncoding(enc);
-        }
-        else {
-            return_str = RubyString.newUnicodeString(runtime, str);
-        }
+//         if (runtime.is2_0()){
+//             IRubyObject obj = RubyEncoding.getDefaultInternal(RubyString.newEmptyString(runtime));
+//             Encoding enc = obj.isNil() ? Encoding.load("UTF8") : ((RubyEncoding) obj).getEncoding();
+//             ByteList value = new ByteList(RubyEncoding.encodeUTF8(str), false);
+//             return_str = RubyString.newString(runtime, value);
+//             value.setEncoding(enc);
+//         }
+//         else {
+//             return_str = RubyString.newUnicodeString(runtime, str);
+//         }
+        return_str = RubyString.newUnicodeString(runtime, str);
         return return_str;
     }
 
@@ -432,6 +433,9 @@ public abstract class AbstractDriverDefinition implements DriverDefinition {
     public void setPreparedStatementParam(PreparedStatement ps,
             IRubyObject arg, int idx) throws SQLException {
         switch (RubyType.inferRubyType(arg)) {
+        // add by TSB 2022.05.20
+        case INTEGER:
+        // end add
         case FIXNUM:
             ps.setLong(idx, ((RubyInteger) arg).getLongValue());
             break;
@@ -695,7 +699,7 @@ public abstract class AbstractDriverDefinition implements DriverDefinition {
 
         int zoneOffset = stamp.getZone().getOffset(stamp.getMillis()) / 1000;
 
-        RubyClass klazz = runtime.fastGetClass("DateTime");
+        RubyClass klazz = runtime.getClass("DateTime");
 
         IRubyObject rbOffset = runtime.getKernel().callMethod("Rational",
                 runtime.newFixnum(zoneOffset), runtime.newFixnum(86400));
@@ -743,7 +747,7 @@ public abstract class AbstractDriverDefinition implements DriverDefinition {
     public static IRubyObject prepareRubyDateFromSqlDate(Ruby runtime, java.util.Date date) {
         Calendar c = Calendar.getInstance();
         c.setTime(date);
-        RubyClass klazz = runtime.fastGetClass("Date");
+        RubyClass klazz = runtime.getClass("Date");
         return klazz.callMethod(runtime.getCurrentContext(), "civil",
                 new IRubyObject[] { runtime.newFixnum(c.get(Calendar.YEAR)),
                         runtime.newFixnum(c.get(Calendar.MONTH) + 1),

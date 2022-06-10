@@ -1,12 +1,15 @@
-source :rubygems
+source "https://rubygems.org"
 
-path '../'
+#path '../'
 
 gemspec
 
 platforms :jruby do
-  gem 'jdbc-sqlite3', '>=3.5.8'
-  gem 'do_jdbc',      '0.10.17'
+  path '../' do
+    gem 'jdbc-sqlite3', '~> 3.28'
+    gem 'do_jdbc'
+  end
+
 end
 
 group :development do # Development dependencies (as in the gemspec)
