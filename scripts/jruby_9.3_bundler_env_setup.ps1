@@ -13,13 +13,13 @@ $Env:PATH=$env:JRUBY_HOME + "\bin;$Env:PATH"
 $env:JRE_HOME="C:\Program Files\Java\jre1.8.0_333"
 $Env:PATH=$env:JRE_HOME + "\bin;$Env:PATH"
 
-$env:JDK_HOME="C:\Program Files\Java\jdk1.8.0_311"
+$env:JDK_HOME="C:\Program Files\Java\jdk1.8.0_331"
 $Env:PATH=$env:JDK_HOME + "\bin;$Env:PATH"
 
 #$env:JAVA_HOME="C:\Program Files\Java\jre1.8.0_333"
 #$Env:PATH=$env:JAVA_HOME + "\bin;$Env:PATH"
 $env:JAVA_HOME
-$env:JAVA_HOME="C:\Program Files\Java\jdk1.8.0_311"
+$env:JAVA_HOME="C:\Program Files\Java\jdk1.8.0_331"
 $env:PATH
 $env:JAVA_HOME
 
