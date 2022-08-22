@@ -1,7 +1,6 @@
-#require 'bundler/setup' # Set up gems listed in the Gemfile
+require 'bundler/setup' # Set up gems listed in the Gemfile
 require 'pathname'
-require 'rubygems'
-require 'bundler'
+#require 'rubygems'
 require 'rubygems/package_task'
 Bundler::GemHelper.install_tasks
 
@@ -9,8 +8,7 @@ require 'rake'
 require 'rake/clean'
 
 ROOT = Pathname(__FILE__).dirname.expand_path
-
-require ROOT + 'lib/do_jdbc/version'
+require ROOT.to_s + '/lib/do_jdbc/version'
 
 JRUBY    = RUBY_PLATFORM =~ /java/
 IRONRUBY = defined?(RUBY_ENGINE) && RUBY_ENGINE == 'ironruby'
@@ -22,7 +20,6 @@ CLEAN.include(%w[ {tmp,pkg}/ **/*.{o,so,bundle,jar,log,a,gem,dSYM,obj,pdb,exp,DS
 task :default do
   # do nothing
 end
-
 
 Rake::Task['build'].clear_actions if Rake::Task.task_defined?('build')
 # task :build => [ :java, :gem ]

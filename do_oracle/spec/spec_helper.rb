@@ -1,11 +1,13 @@
 $TESTING=true
 JRUBY = RUBY_PLATFORM =~ /java/
 
-require 'rubygems'
+require 'java'
+# require 'rubygems'
 require 'rspec'
 require 'date'
 require 'ostruct'
 require 'fileutils'
+
 
 driver_lib = File.expand_path('../../lib', __FILE__)
 $LOAD_PATH.unshift(driver_lib) unless $LOAD_PATH.include?(driver_lib)
@@ -18,6 +20,17 @@ repo_root = File.expand_path('../../..', __FILE__)
   $LOAD_PATH.unshift(lib_path) if File.directory?(lib_path) && !$LOAD_PATH.include?(lib_path)
 end
 
+# puts '--- Java/JRuby $CLASSPATH: '
+# # puts "--- #{$CLASSPATH.each { |cp| puts cp if cp.include?('JLIB') }}"
+# puts "--- #{$CLASSPATH}"
+# puts '--- End Java/JRuby $CLASSPATH.'
+
+# require '../../jdbc_drivers/oracle/*.jar'
+require "#{File.join(File.dirname(__FILE__), '..', 'jdbc_drivers/oracle')}/ojdbc8.jar"
+puts '--- Java/JRuby $CLASSPATH: '
+# puts "--- #{$CLASSPATH.each { |cp| puts cp if cp.include?('JLIB') }}"
+puts "--- #{$CLASSPATH}"
+puts '--- End Java/JRuby $CLASSPATH.'
 require 'data_objects'
 require 'data_objects/spec/setup'
 require 'data_objects/spec/lib/pending_helpers'
@@ -33,11 +46,11 @@ ENV['TZ'] ||= 'EET' unless JRUBY
 
 CONFIG = OpenStruct.new
 CONFIG.scheme   = 'oracle'
-CONFIG.user     = ENV['DO_ORACLE_USER'] || 'do_test'
-CONFIG.pass     = ENV['DO_ORACLE_PASS'] || 'do_test'
-CONFIG.host     = ENV['DO_ORACLE_HOST'] || 'localhost'
+CONFIG.user     = ENV['DO_ORACLE_USER'] || 'sysman'
+CONFIG.pass     = ENV['DO_ORACLE_PASS'] || 'mansys'
+CONFIG.host     = ENV['DO_ORACLE_HOST'] || 'BE1-DEV-SLV-99O'
 CONFIG.port     = ENV['DO_ORACLE_PORT'] || '1521'
-CONFIG.database = ENV['DO_ORACLE_DATABASE'] || '/orcl'
+CONFIG.database = ENV['DO_ORACLE_DATABASE'] || '/genrw'
 
 CONFIG.driver       = 'oracle'
 CONFIG.jdbc_driver  = DataObjects::Oracle.const_get('JDBC_DRIVER') rescue nil

@@ -1,7 +1,7 @@
 #require 'bundler/setup' # Set up gems listed in the Gemfile
 require 'pathname'
-require 'rubygems'
-require 'bundler'
+# require 'rubygems'
+require 'bundler/setup'
 require 'rubygems/package_task'
 require 'rspec/its'
 Bundler::GemHelper.install_tasks
@@ -10,8 +10,7 @@ require 'rake'
 require 'rake/clean'
 
 ROOT = Pathname(__FILE__).dirname.expand_path
-
-require ROOT + 'lib/data_objects/version'
+require ROOT.to_s + "/lib/data_objects/version"
 
 JRUBY    = RUBY_PLATFORM =~ /java/
 IRONRUBY = defined?(RUBY_ENGINE) && RUBY_ENGINE == 'ironruby'

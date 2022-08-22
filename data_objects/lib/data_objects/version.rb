@@ -1,3 +1,3 @@
 module DataObjects
-  VERSION = '0.11.1'
+  VERSION = '0.10.18'
 end

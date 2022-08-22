@@ -18,10 +18,10 @@ RUN_RCOV = JRUBY || IRONRUBY ? false : (ENV.has_key?('NO_RCOV') ? ENV['NO_RCOV']
 # projects += %w[do_mysql do_postgres do_sqlite3 do_sqlserver do_oracle]
 # projects += jruby_projects if JRUBY
 
-jruby_projects = %w[do_jdbc do_openedge do_sqlite3 do_oracle]
+jruby_projects = %w[do_jdbc do_openedge do_sqlite3 do_oracle data_objects do_jdbc ]
 # jruby_projects = %w[do_sqlite3]
-jruby_projects = %w[data_objects do_jdbc do_openedge do_oracle]
-# jruby_projects = %w[]
+# jruby_projects = %w[do_jdbc do_openedge do_oracle]
+jruby_projects = %w[data_objects]
 projects = %w[data_objects]
 projects += jruby_projects if JRUBY
 
@@ -59,7 +59,7 @@ task :spec do
   # end
 
   # spec_projects = %w[data_objects do_mysql do_postgres do_sqlite3]
-  spec_projects = %w[data_objects do_sqlite3]
+  spec_projects = %w[data_objects do_openedge]
   if JRUBY
     #spec_projects += %w[do_derby do_h2 do_hsqldb]
     # spec_projects = %w[data_objects]

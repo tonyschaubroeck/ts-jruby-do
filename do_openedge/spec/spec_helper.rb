@@ -1,7 +1,8 @@
 $TESTING=true
 JRUBY = true
 
-require 'rubygems'
+require 'bundler/setup' # Set up gems listed in the Gemfile
+# require 'rubygems'
 require 'rspec'
 require 'date'
 require 'ostruct'
@@ -31,15 +32,16 @@ CONFIG              = OpenStruct.new
 CONFIG.scheme       = 'openedge'
 CONFIG.driver       = 'openedge'
 CONFIG.jdbc_driver  = DataObjects::Openedge.const_get('JDBC_DRIVER') rescue nil
-CONFIG.user         = ENV['DO_OPENEDGE_USER'] || 'test'
-CONFIG.pass         = ENV['DO_OPENEDGE_PASS'] || ''
-CONFIG.host         = ENV['DO_OPENEDGE_HOST'] || '192.168.1.241'
-CONFIG.port         = ENV['DO_OPENEDGE_PORT'] || '13370'
-CONFIG.database     = ENV['DO_OPENEDGE_DATABASE'] || 'test'
+CONFIG.user         = ENV['DO_OPENEDGE_USER'] || 'sysman'
+CONFIG.pass         = ENV['DO_OPENEDGE_PASS'] || 'mansys'
+CONFIG.host         = ENV['DO_OPENEDGE_HOST'] || 'BE1-DEV-SLV-99P'
+CONFIG.port         = ENV['DO_OPENEDGE_PORT'] || '15000'
+CONFIG.database     = ENV['DO_OPENEDGE_DATABASE'] || 'genrw'
 # Result of this query must be a value of "1":
 CONFIG.testsql      = "SELECT SIGN(1) FROM SYSPROGRESS.SYSCALCTABLE"
 CONFIG.uri          = ENV["DO_OPENEDGE_SPEC_URI"] ||"#{CONFIG.scheme}://#{CONFIG.user}:#{CONFIG.pass}@#{CONFIG.host}:#{CONFIG.port}/#{CONFIG.database}"
 CONFIG.jdbc_uri     = "jdbc:openedge://#{CONFIG.host}:#{CONFIG.port}/#{CONFIG.database}?user=#{CONFIG.user}&password=#{CONFIG.pass}"
+
 
 module DataObjectsSpecHelpers
 
